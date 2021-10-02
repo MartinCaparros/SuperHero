@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { FloatingLabel,Form,Button } from 'react-bootstrap';
@@ -9,6 +9,7 @@ import { Container } from './styled';
 const Login = () => {
     
     const {push} = useHistory()
+    const [error, setError]=useState('')
 
     return(
         <div className="d-flex justify-content-center mt-5">
@@ -29,6 +30,7 @@ const Login = () => {
                 }}
                 onSubmit = { async (values, { setSubmiting } ) => {
                     try {
+                        setError('')
                         const body = {
                             email: values.email,
                             password:values.password,
@@ -37,7 +39,7 @@ const Login = () => {
                         localStorage.setItem('userToken',response.data.token)
                         push("/home")
                     } catch(error) {
-                        console.log("error:",error)
+                        setError('Wrong password, please try again')
                     } finally {
                     }
                 }}
@@ -81,7 +83,7 @@ const Login = () => {
                                     onBlur={handleBlur}
                                 />
                             </FloatingLabel>
-                            {errors.password && touched.password && errors.password}
+                            {error && ( <p>Something seems wrong, please try again</p> )}
                             <div className=" d-flex justify-content-center">
                                 <Button type="submit" disabled={isSubmitting} className="mt-2">Submit</Button>
                             </div>
