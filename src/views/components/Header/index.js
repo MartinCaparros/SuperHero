@@ -11,8 +11,9 @@ const Header = () => {
     return(
         <header className="container-fluid">
             <Navbar className="container-fluid" bg="light" expand="lg">
-                <div>
+                <div className="d-flex align-items-center">
                     <FontAwesomeIcon icon={faMask} size="3x" onClick={()=>push("/home")}/>
+                    <h5 className="p-2">SuperHero API</h5>
                 </div>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse className="d-flex justify-content-center" id="navbarScroll">
