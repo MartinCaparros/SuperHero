@@ -15,11 +15,11 @@ const teamSlice = createSlice({
     name:'team',
     initialState,
     reducers:{
-        setTeam:simpleState('teams'),
+        setTeams:simpleState('teams'),
         setCurrentTeam:simpleState('currentTeam')
     }
 });
 
-export const {setTeam,setCurrentTeam} = teamSlice.actions;
+export const {setTeams,setCurrentTeam} = teamSlice.actions;
 
 export default teamSlice.reducer;

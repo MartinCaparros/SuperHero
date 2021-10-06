@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {HeroCard} from 'views/components';
+import { HeroRecruitmentCard } from 'views/components';
 import axios from 'axios';
 import {Form,Button,Container,Row,Col,FloatingLabel,Spinner} from 'react-bootstrap';
 
@@ -67,10 +67,10 @@ const CreationPanel = () => {
                                 sm
                                 key={hero.id}
                             >
-                                <HeroCard
+                                <HeroRecruitmentCard
                                     hero={hero}
                                 >
-                                </HeroCard>
+                                </HeroRecruitmentCard>
                             </Col>
                         
                         )}
