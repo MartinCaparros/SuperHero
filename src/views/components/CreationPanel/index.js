@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {HeroCard} from 'views/components';
 import axios from 'axios';
-import {Form,FormControl,Button,Container,Row,Col} from 'react-bootstrap';
+import {Form,Button,Container,Row,Col,FloatingLabel,Spinner} from 'react-bootstrap';
 
 const CreationPanel = () => {
 
@@ -18,6 +18,7 @@ const CreationPanel = () => {
         try{
             setIsSubmitting(true)
             setError('')
+            setHeroResult([])
             const response = await axios.get(`https://superheroapi.com/api.php/10218740354315571/search/${heroName}`)
 
             if(response.data.response ==="error"){
@@ -28,45 +29,59 @@ const CreationPanel = () => {
         }catch(error){
             console.log(error)
         }finally{
-            setError('')
             setIsSubmitting(false)
         }
     }
+    const handleOnEnter= e => {
+        const {key} = e
+        if(key === "Enter"){
+            searchHero()
+            e.preventDefault()
+        }
+    };
     return ( 
 
         <div>
-            <Form className="d-flex mt-4">
-                <FormControl
-                    type="search"
-                    placeholder="Search your SuperHero"
-                    className="mr-2"
-                    aria-label="Search"
-                    onChange={heroNameSearch}
-                />
-                <Button disabled={isSubmitting} variant="outline-success" onClick={()=>searchHero()}>Search</Button>
+            <Form className="d-flex justify-content-center align-items-center mt-4">
+                <FloatingLabel
+                    controlId="floatingInput"
+                    label="Search your SuperHero"
+                    className="d-flex"
+                >
+                    <Form.Control 
+                        type="search"
+                        name="superHeroName"
+                        placeholder="Search your SuperHero"
+                        onChange={heroNameSearch}
+                        onKeyPress={handleOnEnter}
+                    />
+                    <Button disabled={isSubmitting} variant="outline-primary" onClick={()=>searchHero()}>Search</Button>
+                </FloatingLabel>
             </Form>
-            {error && <p>{error}</p>}
+            {error && <span className="text-danger mt-4">{`${error.charAt(0).toUpperCase()}${error.slice(1)}`}</span>}
             <Container>
-                <Row>
-                    {heroResult.map( hero =>
-                        <Col sm>
-                            <HeroCard
-                                id={hero.id}
-                                name={hero.name}
-                                image={hero.image.url}
-                                fullname={hero.biography['full-name']}
-                                alignment={hero.biography.alignment}
+                {!isSubmitting  
+                    ? <Row>
+                        {heroResult.map( hero =>
+                            <Col
+                                sm
+                                key={hero.id}
                             >
-                            </HeroCard>
-                        </Col>
-                    
-                    )}
-                </Row>
+                                <HeroCard
+                                    hero={hero}
+                                >
+                                </HeroCard>
+                            </Col>
+                        
+                        )}
+                    </Row>
+                    :
+                    <div className="d-flex justify-content-center m-5">
+                        <Spinner animation="border" variant="primary" /> 
+                    </div>
+                }     
             </Container>
         </div>
-
-
-
     );
 }
  
