@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentTeam } from 'core/team/reducer';
 
 
-const HeroCard = ({hero}) => {
+const HeroCard = ({hero},{hideDeleteButton}) => {
 
     const {currentTeam} = useSelector(state=>state.team)
 
@@ -76,7 +76,9 @@ const HeroCard = ({hero}) => {
                         </Card.Body>
                     </Accordion.Body>
                 </Card>
-                <Button className="mt-1 btn-danger" onClick={()=>eliminateHero()} >Eliminate this hero</Button>
+                { hideDeleteButton && 
+                    <Button className="mt-1 btn-danger" onClick={()=>eliminateHero()} >Eliminate this hero</Button>
+                }
             </Accordion.Item>
         </Accordion>
 

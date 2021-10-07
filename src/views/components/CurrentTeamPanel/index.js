@@ -8,6 +8,7 @@ import { setTeams,setCurrentTeam } from 'core/team/reducer';
 const CurrentTeamPanel = () => {
 
     const {push} = useHistory()
+    
 
     const [teamNickName,setTeamNickName] = useState('')
     const [showModal,setShowModal] = useState(false)

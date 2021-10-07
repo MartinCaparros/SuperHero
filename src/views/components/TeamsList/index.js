@@ -6,6 +6,8 @@ import { HeroCard } from 'views/components';
 const TeamList = () => {
 
     const {teams} = useSelector(state=>state.team)
+
+    const hideDeleteButton = true
     
     return ( 
     
@@ -14,27 +16,29 @@ const TeamList = () => {
                 <h2>This are your teams</h2>   
             </div>
             <Row className="m-0">
-                {teams.map(teamName => {
+                {teams.map( team => {
                     return(
-
-                    <h3 className="text-center">Team: {teamName.name}</h3>
-
+                        <>
+                            <Col xs={12}>
+                                <h3 className="text-center m-3">Team: {team.name}</h3>
+                            </Col>
+                            {team.team.map(hero=> 
+                                <Col
+                                    sm={4}
+                                    lg={2}
+                                    key={hero.id}
+                                >
+                                    <HeroCard
+                                        hero={hero}
+                                        hideDeleteButton={hideDeleteButton}
+                                    />
+                                </Col>
+                                
+                            )}
+                        </>
                     )
                 })
-                }
-                {teams.map( teamList => teamList.team.map(hero => {
-                    return(
-                        <Col
-                        sm={4}
-                        lg={2}
-                        key={hero.id}
-                    >
-                        <HeroCard
-                            hero={hero}
-                        />
-                    </Col>
-                    )
-                }))}
+            }
             </Row>     
         </section> 
     
